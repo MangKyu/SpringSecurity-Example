@@ -7,7 +7,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 @SpringBootApplication
 public class SecurityApplication extends SpringBootServletInitializer {
-    
+
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder){
         return builder.sources(SecurityApplication.class);
