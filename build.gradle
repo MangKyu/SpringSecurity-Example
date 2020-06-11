@@ -18,9 +18,9 @@ repositories {
     mavenCentral()
 }
 
+
 dependencies {
     implementation 'org.mariadb.jdbc:mariadb-java-client'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     
     implementation 'org.springframework.boot:spring-boot-starter-security'

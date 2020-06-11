@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" monitorInterval="30">
+    <Properties>
+        <property name="LOG_PATH" value="./logs/mha/Journal"/>
+        <property name="LOG_PATTERN" value="%-5level %d{yyyy-MM-dd HH:mm:ss} [%thread] %logger[%method:%line] - %msg%n"/>
+        <property name="LOG_LEVEL" value="debug"/>
+        <property name="FILE_APPENDER" value="File"/>
+        <property name="CONSOLE_APPENDER" value="Console"/>
+        <property name="IS_ADDITIVE" value="false"/>
+    </Properties>
+
+    <Appenders>
+
+        <Console name="${CONSOLE_APPENDER}" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+
+        <RollingFile name="${FILE_APPENDER}" fileName="${LOG_PATH}/Journal.log"
+                     filePattern="${LOG_PATH}/Journal_%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${LOG_PATH}">
+                    <IfFileName glob="*.log"/>
+                    <IfLastModified age="30d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+
+        <!-- Log everything in custom package -->
+        <Logger name="com.ku.mha.journal" level="${LOG_LEVEL}" additivity="${IS_ADDITIVE}">
+            <AppenderRef ref="${CONSOLE_APPENDER}"/>
+            <AppenderRef ref="${FILE_APPENDER}"/>
+        </Logger>
+
+        <!-- Log everything in Spring Boot -->
+        <Logger name="org.springframework.boot" level="${LOG_LEVEL}" additivity="${IS_ADDITIVE}">
+            <AppenderRef ref="${CONSOLE_APPENDER}"/>
+            <AppenderRef ref="${FILE_APPENDER}"/>
+        </Logger>
+
+        <!-- Log everything in Spring Core -->
+        <Logger name="org.springframework.core" level="${LOG_LEVEL}" additivity="${IS_ADDITIVE}">
+            <AppenderRef ref="${CONSOLE_APPENDER}"/>
+            <AppenderRef ref="${FILE_APPENDER}"/>
+        </Logger>
+
+        <!-- Log everything in EgovFramework -->
+        <logger name="egovframework" level="${LOG_LEVEL}" additivity="${IS_ADDITIVE}">
+            <AppenderRef ref="${CONSOLE_APPENDER}"/>
+            <AppenderRef ref="${FILE_APPENDER}"/>
+        </logger>
+
+        <!-- Log everything in Hikari -->
+        <logger name="com.zaxxer.hikari.pool" level="${LOG_LEVEL}" additivity="${IS_ADDITIVE}">
+            <AppenderRef ref="${CONSOLE_APPENDER}"/>
+            <AppenderRef ref="${FILE_APPENDER}"/>
+        </logger>
+
+        <Root level="${LOG_LEVEL}">
+            <AppenderRef ref="${CONSOLE_APPENDER}"/>
+            <AppenderRef ref="${FILE_APPENDER}"/>
+        </Root>
+
+    </Loggers>
+
+</Configuration>
