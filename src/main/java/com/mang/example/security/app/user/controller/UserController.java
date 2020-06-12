@@ -34,6 +34,7 @@ public class UserController {
         return "user/login";
     }
 
+    /*
     @PostMapping(value = "/login")
     public String login(HttpServletRequest request, RedirectAttributes redirectAttributes, @ModelAttribute UserVO userVO){
         log.error("@@@");
@@ -47,6 +48,7 @@ public class UserController {
         request.getSession().setAttribute("userVO", userVO);
         return "redirect:/index";
     }
+    */
 
     @GetMapping(value = "/init")
     public String createAdmin(@ModelAttribute UserVO userVO){
