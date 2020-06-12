@@ -33,7 +33,7 @@
     <Loggers>
 
         <!-- Log everything in custom package -->
-        <Logger name="com.ku.mha.journal" level="${LOG_LEVEL}" additivity="${IS_ADDITIVE}">
+        <Logger name="com.mang.example.security" level="${LOG_LEVEL}" additivity="${IS_ADDITIVE}">
             <AppenderRef ref="${CONSOLE_APPENDER}"/>
             <AppenderRef ref="${FILE_APPENDER}"/>
         </Logger>
