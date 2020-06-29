@@ -38,13 +38,6 @@ public class UserController {
 
     @GetMapping(value = "/init")
     public String createAdmin(@ModelAttribute UserVO userVO){
-        userVO.setUserEmail("user@naver.com");
-        userVO.setUserPw(passwordEncoder.encode("test"));
-        userVO.setRole(UserRole.USER);
-        if(userService.createUser(userVO) == null){
-            log.error("Create Admin Error");
-        }
-
         userVO.setUserEmail("admin@naver.com");
         userVO.setUserPw(passwordEncoder.encode("test"));
         userVO.setRole(UserRole.ADMIN);
