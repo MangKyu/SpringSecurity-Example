@@ -8,16 +8,18 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
 @RequestMapping(value = "/user")
 @Log4j2
 public class UserController {
@@ -31,20 +33,15 @@ public class UserController {
     @NonNull
     private BCryptPasswordEncoder passwordEncoder;
 
-    @GetMapping(value = "/loginView")
-    public String loginView(){
-        return "user/login";
-    }
-
     @GetMapping(value = "/init")
-    public String createAdmin(@ModelAttribute UserVO userVO){
+    public ResponseEntity createAdmin(@ModelAttribute UserVO userVO){
         userVO.setUserEmail("admin@naver.com");
         userVO.setUserPw(passwordEncoder.encode("test"));
         userVO.setRole(UserRole.ADMIN);
         if(userService.createUser(userVO) == null){
             log.error("Create Admin Error");
         }
-        return "redirect:/index";
+        return ResponseEntity.ok().build();
     }
 
 }
