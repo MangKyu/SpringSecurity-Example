@@ -6,6 +6,9 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -14,17 +17,17 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public UserVO login(UserVO userVO) {
-        return userRepository.findByUserEmailAndUserPw(userVO.getUserEmail(), userVO.getUserPw());
-    }
-
-    @Override
-    public UserVO createUser(UserVO userVO) {
+    public UserVO signUp(UserVO userVO) {
         return userRepository.save(userVO);
     }
 
     @Override
-    public UserVO findUserByUserEmail(String userEmail) {
-        return userRepository.findByUserEmail(userEmail).get();
+    public Optional<UserVO> findByEmail(String userEmail) {
+        return userRepository.findByUserEmail(userEmail);
+    }
+
+    @Override
+    public List<UserVO> findAll() {
+        return userRepository.findAll();
     }
 }

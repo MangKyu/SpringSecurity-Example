@@ -2,12 +2,15 @@ package com.mang.example.security.app.user.service;
 
 import com.mang.example.security.app.user.model.UserVO;
 
+import java.util.List;
+import java.util.Optional;
+
 public interface UserService {
 
-    UserVO login(UserVO userVO);
+    UserVO signUp(UserVO userVO);
 
-    UserVO createUser(UserVO userVO);
+    Optional<UserVO> findByEmail(String userEmail);
 
-    UserVO findUserByUserEmail(String userEmail);
+    List<UserVO> findAll();
 
 }
