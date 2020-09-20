@@ -1,4 +1,4 @@
-package com.mang.example.security.config;
+package com.mang.example.security.config.interceptor;
 
 import com.mang.example.security.constants.AuthConstants;
 import com.mang.example.security.utils.TokenUtils;
