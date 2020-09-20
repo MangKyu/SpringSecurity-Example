@@ -1,17 +1,11 @@
 package com.mang.example.security.utils;
 
 import com.mang.example.security.app.user.model.UserVO;
-import com.mang.example.security.app.user.service.UserDetailsServiceImpl;
+import com.mang.example.security.enums.role.UserRole;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
@@ -20,17 +14,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
 @RequiredArgsConstructor
 @Log4j2
 public class TokenUtils {
 
     private static final String secretKey = "ThisIsA_SecretKeyForJwtExample";
 
-    @Resource(name = "userDetailsService")
-    private UserDetailsService userDetailsService;
-
-    public String generateJwtToken(UserVO userVO) {
+    public static String generateJwtToken(UserVO userVO) {
         JwtBuilder builder = Jwts.builder()
                 .setSubject(userVO.getUserEmail())
                 .setHeader(createHeader())
@@ -41,13 +31,13 @@ public class TokenUtils {
         return builder.compact();
     }
 
-    public boolean isValidToken(String token) {
+    public static boolean isValidToken(String token) {
         try {
             Claims claims = getClaimsFormToken(token);
 
             log.info("expireTime :" + claims.getExpiration());
-            log.info("name :" + claims.get("name"));
-            log.info("Id :" + claims.get("id"));
+            log.info("email :" + claims.get("email"));
+            log.info("role :" + claims.get("role"));
             return true;
 
         } catch (ExpiredJwtException exception) {
@@ -62,24 +52,18 @@ public class TokenUtils {
         }
     }
 
-    public Authentication createAuthenticationFromToken(String token) {
-        UserDetails userDetails = ((UserDetailsServiceImpl) userDetailsService).loadUserByUsername(getUserIdFromToken(token));
-        // it is rather safe to return Authentication with NULL credentials if you do not require to use user credentials after successful authentication.
-        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-    }
-
-    public String getTokenFromHeader(String header) {
+    public static String getTokenFromHeader(String header) {
         return header.split(" ")[1];
     }
 
-    private Date createExpireDateForOneYear() {
+    private static Date createExpireDateForOneYear() {
         // 토큰 만료시간은 30일으로 설정
-        Calendar c= Calendar.getInstance();
+        Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, 30);
         return c.getTime();
     }
 
-    private Map<String, Object> createHeader() {
+    private static Map<String, Object> createHeader() {
         Map<String, Object> header = new HashMap<>();
 
         header.put("typ", "JWT");
@@ -89,29 +73,33 @@ public class TokenUtils {
         return header;
     }
 
-    private Map<String, Object> createClaims(UserVO userVO) {
-        // 비공개 클레임으로 사용자의 이름과 이메일을 설정, 세션 처럼 정보를 넣고 빼서 쓸 수 있다.
+    private static Map<String, Object> createClaims(UserVO userVO) {
+        // 공개 클레임에 사용자의 이름과 이메일을 설정하여 정보를 조회할 수 있다.
         Map<String, Object> claims = new HashMap<>();
 
-        claims.put("id", userVO.getId());
-        claims.put("name", userVO.getUserEmail());
+        claims.put("email", userVO.getUserEmail());
+        claims.put("role", userVO.getRole());
 
         return claims;
     }
 
-    private Key createSigningKey() {
+    private static Key createSigningKey() {
         byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(secretKey);
         return new SecretKeySpec(apiKeySecretBytes, SignatureAlgorithm.HS256.getJcaName());
     }
 
-    private Claims getClaimsFormToken(String token) {
+    private static Claims getClaimsFormToken(String token) {
         return Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(secretKey))
                 .parseClaimsJws(token).getBody();
     }
 
-    private String getUserIdFromToken(String token) {
+    private static String getUserEmailFromToken(String token) {
         Claims claims = getClaimsFormToken(token);
-        return (String) claims.get("id");
+        return (String) claims.get("email");
     }
 
+    private static UserRole getRoleFromToken(String token) {
+        Claims claims = getClaimsFormToken(token);
+        return (UserRole) claims.get("role");
+    }
 }
