@@ -14,9 +14,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-@RequiredArgsConstructor
 @Log4j2
-public class TokenUtils {
+public final class TokenUtils {
 
     private static final String secretKey = "ThisIsA_SecretKeyForJwtExample";
 

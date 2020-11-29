@@ -1,7 +1,6 @@
 package com.mang.example.security.config.security;
 
 import com.mang.example.security.app.user.domain.MyUserDetails;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -12,16 +11,12 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.annotation.Resource;
-
 @RequiredArgsConstructor
 @Log4j2
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
-    @Resource(name = "userDetailsService")
-    private UserDetailsService userDetailsService;
-    @NonNull
-    private BCryptPasswordEncoder passwordEncoder;
+    private final UserDetailsService userDetailsService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
