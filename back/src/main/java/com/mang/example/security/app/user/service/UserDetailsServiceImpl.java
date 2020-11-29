@@ -1,6 +1,6 @@
 package com.mang.example.security.app.user.service;
 
-import com.mang.example.security.app.user.model.UserDetailsVO;
+import com.mang.example.security.app.user.domain.MyUserDetails;
 import com.mang.example.security.app.user.repository.UserRepository;
 import com.mang.example.security.exception.UserNotFoundException;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private UserRepository userRepository;
 
     @Override
-    public UserDetailsVO loadUserByUsername(String userEmail) {
-        return userRepository.findByUserEmail(userEmail).map(u -> new UserDetailsVO(u, Collections.singleton(new SimpleGrantedAuthority(u.getRole().getValue())))).orElseThrow(() -> new UserNotFoundException(userEmail));
+    public MyUserDetails loadUserByUsername(String userEmail) {
+        return userRepository.findByUserEmail(userEmail).map(u -> new MyUserDetails(u, Collections.singleton(new SimpleGrantedAuthority(u.getRole().getValue())))).orElseThrow(() -> new UserNotFoundException(userEmail));
     }
 }

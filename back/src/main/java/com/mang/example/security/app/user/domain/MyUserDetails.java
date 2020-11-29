@@ -1,4 +1,4 @@
-package com.mang.example.security.app.user.model;
+package com.mang.example.security.app.user.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,10 +10,10 @@ import java.util.Collection;
 
 @AllArgsConstructor
 @Getter
-public class UserDetailsVO implements UserDetails {
+public class MyUserDetails implements UserDetails {
 
     @Delegate
-    private UserVO userVO;
+    private User user;
     private Collection<? extends GrantedAuthority> authorities;
 
     @Override
@@ -23,31 +23,31 @@ public class UserDetailsVO implements UserDetails {
 
     @Override
     public String getPassword() {
-        return userVO.getUserPw();
+        return user.getUserPw();
     }
 
     @Override
     public String getUsername() {
-        return userVO.getUserEmail();
+        return user.getUserEmail();
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return userVO.getIsEnable();
+        return user.getIsEnable();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return userVO.getIsEnable();
+        return user.getIsEnable();
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return userVO.getIsEnable();
+        return user.getIsEnable();
     }
 
     @Override
     public boolean isEnabled() {
-        return userVO.getIsEnable();
+        return user.getIsEnable();
     }
 }

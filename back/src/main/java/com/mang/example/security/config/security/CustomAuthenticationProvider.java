@@ -1,6 +1,6 @@
 package com.mang.example.security.config.security;
 
-import com.mang.example.security.app.user.model.UserDetailsVO;
+import com.mang.example.security.app.user.domain.MyUserDetails;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -31,7 +31,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String userEmail = token.getName();
         String userPw = (String) token.getCredentials();
         // UserDetailsService를 통해 DB에서 아이디로 사용자 조회
-        UserDetailsVO userDetailsVO = (UserDetailsVO) userDetailsService.loadUserByUsername(userEmail);
+        MyUserDetails userDetailsVO = (MyUserDetails) userDetailsService.loadUserByUsername(userEmail);
         if (!passwordEncoder.matches(userPw, userDetailsVO.getPassword())) {
             throw new BadCredentialsException(userDetailsVO.getUsername() + "Invalid password");
         }

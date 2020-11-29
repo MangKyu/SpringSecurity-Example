@@ -1,6 +1,6 @@
 package com.mang.example.security.utils;
 
-import com.mang.example.security.app.user.model.UserVO;
+import com.mang.example.security.app.user.domain.User;
 import com.mang.example.security.enums.role.UserRole;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +20,11 @@ public class TokenUtils {
 
     private static final String secretKey = "ThisIsA_SecretKeyForJwtExample";
 
-    public static String generateJwtToken(UserVO userVO) {
+    public static String generateJwtToken(User user) {
         JwtBuilder builder = Jwts.builder()
-                .setSubject(userVO.getUserEmail())
+                .setSubject(user.getUserEmail())
                 .setHeader(createHeader())
-                .setClaims(createClaims(userVO))
+                .setClaims(createClaims(user))
                 .setExpiration(createExpireDateForOneYear())
                 .signWith(SignatureAlgorithm.HS256, createSigningKey());
 
@@ -34,7 +34,6 @@ public class TokenUtils {
     public static boolean isValidToken(String token) {
         try {
             Claims claims = getClaimsFormToken(token);
-
             log.info("expireTime :" + claims.getExpiration());
             log.info("email :" + claims.get("email"));
             log.info("role :" + claims.get("role"));
@@ -73,12 +72,12 @@ public class TokenUtils {
         return header;
     }
 
-    private static Map<String, Object> createClaims(UserVO userVO) {
+    private static Map<String, Object> createClaims(User user) {
         // 공개 클레임에 사용자의 이름과 이메일을 설정하여 정보를 조회할 수 있다.
         Map<String, Object> claims = new HashMap<>();
 
-        claims.put("email", userVO.getUserEmail());
-        claims.put("role", userVO.getRole());
+        claims.put("email", user.getUserEmail());
+        claims.put("role", user.getRole());
 
         return claims;
     }

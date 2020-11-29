@@ -1,6 +1,6 @@
 package com.mang.example.security.app.user.service;
 
-import com.mang.example.security.app.user.model.UserVO;
+import com.mang.example.security.app.user.domain.User;
 import com.mang.example.security.app.user.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -17,17 +17,17 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public UserVO signUp(UserVO userVO) {
-        return userRepository.save(userVO);
+    public User signUp(User user) {
+        return userRepository.save(user);
     }
 
     @Override
-    public Optional<UserVO> findByEmail(String userEmail) {
+    public Optional<User> findByEmail(String userEmail) {
         return userRepository.findByUserEmail(userEmail);
     }
 
     @Override
-    public List<UserVO> findAll() {
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 }

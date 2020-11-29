@@ -1,15 +1,15 @@
 package com.mang.example.security.app.user.repository;
 
-import com.mang.example.security.app.user.model.UserVO;
+import com.mang.example.security.app.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository <UserVO, Long> {
+public interface UserRepository extends JpaRepository <User, Long> {
 
-    UserVO findByUserEmailAndUserPw(String userId, String userPw);
+    User findByUserEmailAndUserPw(String userId, String userPw);
 
-    Optional<UserVO> findByUserEmail(String userEmail);
+    Optional<User> findByUserEmail(String userEmail);
 }

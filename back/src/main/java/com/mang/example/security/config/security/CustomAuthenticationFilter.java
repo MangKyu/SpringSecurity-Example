@@ -1,7 +1,7 @@
 package com.mang.example.security.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mang.example.security.app.user.model.UserVO;
+import com.mang.example.security.app.user.domain.User;
 import com.mang.example.security.exception.InputNotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,8 +25,8 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException{
         UsernamePasswordAuthenticationToken authRequest;
         try{
-            UserVO userVO = new ObjectMapper().readValue(request.getInputStream(), UserVO.class);
-            authRequest = new UsernamePasswordAuthenticationToken(userVO.getUserEmail(), userVO.getUserPw());
+            User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
+            authRequest = new UsernamePasswordAuthenticationToken(user.getUserEmail(), user.getUserPw());
         } catch (IOException exception){
             throw new InputNotFoundException();
         }
