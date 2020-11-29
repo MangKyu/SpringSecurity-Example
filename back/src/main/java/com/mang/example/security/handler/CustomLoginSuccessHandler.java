@@ -17,7 +17,7 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) {
-        User user = ((MyUserDetails) authentication.getPrincipal()).getUserVO();
+        User user = ((MyUserDetails) authentication.getPrincipal()).getUser();
         String token = TokenUtils.generateJwtToken(user);
         response.addHeader(AuthConstants.AUTH_HEADER, AuthConstants.TOKEN_TYPE + " " + token);
     }

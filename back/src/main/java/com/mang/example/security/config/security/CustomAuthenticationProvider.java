@@ -31,12 +31,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String userEmail = token.getName();
         String userPw = (String) token.getCredentials();
         // UserDetailsService를 통해 DB에서 아이디로 사용자 조회
-        MyUserDetails userDetailsVO = (MyUserDetails) userDetailsService.loadUserByUsername(userEmail);
-        if (!passwordEncoder.matches(userPw, userDetailsVO.getPassword())) {
-            throw new BadCredentialsException(userDetailsVO.getUsername() + "Invalid password");
+        MyUserDetails userDetails = (MyUserDetails) userDetailsService.loadUserByUsername(userEmail);
+        if (!passwordEncoder.matches(userPw, userDetails.getPassword())) {
+            throw new BadCredentialsException(userDetails.getUsername() + "Invalid password");
         }
 
-        return new UsernamePasswordAuthenticationToken(userDetailsVO, userPw, userDetailsVO.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(userDetails, userPw, userDetails.getAuthorities());
     }
 
     @Override

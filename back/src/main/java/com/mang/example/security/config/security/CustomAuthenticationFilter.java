@@ -26,7 +26,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         UsernamePasswordAuthenticationToken authRequest;
         try{
             User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
-            authRequest = new UsernamePasswordAuthenticationToken(user.getUserEmail(), user.getUserPw());
+            authRequest = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPw());
         } catch (IOException exception){
             throw new InputNotFoundException();
         }

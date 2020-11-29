@@ -9,7 +9,7 @@ public interface UserService {
 
     User signUp(User user);
 
-    Optional<User> findByEmail(String userEmail);
+    Optional<User> findByEmail(String email);
 
     List<User> findAll();
 

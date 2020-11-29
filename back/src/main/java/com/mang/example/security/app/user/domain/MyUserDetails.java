@@ -23,12 +23,12 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getUserPw();
+        return user.getPw();
     }
 
     @Override
     public String getUsername() {
-        return user.getUserEmail();
+        return user.getEmail();
     }
 
     @Override

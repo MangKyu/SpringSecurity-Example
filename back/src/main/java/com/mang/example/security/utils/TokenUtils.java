@@ -22,7 +22,7 @@ public class TokenUtils {
 
     public static String generateJwtToken(User user) {
         JwtBuilder builder = Jwts.builder()
-                .setSubject(user.getUserEmail())
+                .setSubject(user.getEmail())
                 .setHeader(createHeader())
                 .setClaims(createClaims(user))
                 .setExpiration(createExpireDateForOneYear())
@@ -76,7 +76,7 @@ public class TokenUtils {
         // 공개 클레임에 사용자의 이름과 이메일을 설정하여 정보를 조회할 수 있다.
         Map<String, Object> claims = new HashMap<>();
 
-        claims.put("email", user.getUserEmail());
+        claims.put("email", user.getEmail());
         claims.put("role", user.getRole());
 
         return claims;
