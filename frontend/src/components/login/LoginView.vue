@@ -6,8 +6,8 @@
       <form>
         <p class="h4 text-center mb-4">Sign in</p>
         <div class="grey-text">
-          <mdb-input v-model="userEmail" label="Your email" icon="envelope" type="email"/>
-          <mdb-input v-model="userPw" label="Your password" icon="lock" type="password"/>
+          <mdb-input v-model="email" label="Your email" icon="envelope" type="email"/>
+          <mdb-input v-model="pw" label="Your password" icon="lock" type="password"/>
         </div>
         <div class="text-center">
           <mdb-btn @click="requestLogin" type="button">Login</mdb-btn>
@@ -31,20 +31,20 @@ export default {
   },
   data () {
     return {
-      userEmail: '',
-      userPw: '',
+      email: '',
+      pw: '',
       msg: 'Welcome to Your Vue.js App'
     }
   },
   methods: {
 
     requestLogin: function () {
-      if (!this.userEmail || !this.userPw) {
+      if (!this.email || !this.pw) {
         alert('Email or Password is Empty')
         return false
       } else {
         this.$axios.post('/api/user/login',
-          {userEmail: this.userEmail, userPw: this.userPw}
+          {email: this.email, pw: this.pw}
         ).then(response => {
           if (response.status === 200) {
             alert('Authorization: ' + response.headers['authorization'])
