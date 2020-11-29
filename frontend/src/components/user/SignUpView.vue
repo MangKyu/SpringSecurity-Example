@@ -5,9 +5,9 @@
       <form>
         <p class="h4 text-center py-4">Sign up</p>
         <div class="grey-text">
-          <mdb-input v-model="userEmail" label="Your email" icon="envelope" group type="email" validate error="wrong" success="right"/>
-          <mdb-input v-model="userPw" label="Your password" icon="lock" group type="password" validate/>
-          <mdb-input v-model="userPw2" label="Confirm your password" icon="exclamation-triangle" group type="password" validate error="wrong" success="right"/>
+          <mdb-input v-model="email" label="Your email" icon="envelope" group type="email" validate error="wrong" success="right"/>
+          <mdb-input v-model="pw" label="Your password" icon="lock" group type="password" validate/>
+          <mdb-input v-model="pw2" label="Confirm your password" icon="exclamation-triangle" group type="password" validate error="wrong" success="right"/>
           <!--
           <b-form-input v-model="birthDate" type="date" placeholder="Your BirthDate" />
           <div class="custom-gender radio-group">
@@ -45,22 +45,22 @@ export default {
   },
   data () {
     return {
-      userEmail: '',
-      userPw: '',
-      userPw2: ''
+      email: '',
+      pw: '',
+      pw2: ''
     }
   },
   methods: {
     insertUserInfo: function () {
-      if (!this.userEmail || !this.userPw || !this.userPw2) {
+      if (!this.email || !this.pw || !this.pw2) {
         alert('Empty items exist')
         return false
-      } else if (this.userPw !== this.userPw2) {
+      } else if (this.pw !== this.pw2) {
         alert('Password1 and Password2 is not same!')
         return false
       } else {
         this.$axios.post('/api/user/signUp',
-          {userEmail: this.userEmail, userPw: this.userPw}
+          {email: this.email, pw: this.pw}
         ).then(response => {
           if (response.status === 200) {
             alert('Sign Up Success')
