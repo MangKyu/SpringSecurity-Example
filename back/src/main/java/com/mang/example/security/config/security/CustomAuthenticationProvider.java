@@ -15,7 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Log4j2
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
-    private final UserDetailsService userDetailsService;
+    @Resource(name="userDetailsService")
+    private UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
