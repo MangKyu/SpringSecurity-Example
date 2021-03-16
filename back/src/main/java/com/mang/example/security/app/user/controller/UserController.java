@@ -21,7 +21,7 @@ public class UserController {
     private final BCryptPasswordEncoder passwordEncoder;
     private final UserService userService;
 
-    @PostMapping(value = "signUp")
+    @PostMapping(value = "/signUp")
     public ResponseEntity<String> signUp(@RequestBody User user) {
         user.setRole(UserRole.ROLE_USER);
         user.setPw(passwordEncoder.encode(user.getPw()));
@@ -30,7 +30,7 @@ public class UserController {
                 : ResponseEntity.ok(TokenUtils.generateJwtToken(userService.signUp(user)));
     }
 
-    @GetMapping(value = "/findAll")
+    @GetMapping(value = "/list")
     public ResponseEntity<List<User>> findAll() {
         return ResponseEntity.ok(userService.findAll());
     }

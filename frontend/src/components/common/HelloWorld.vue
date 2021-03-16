@@ -37,7 +37,7 @@ export default {
       this.$router.push('/convert/convertView')
     },
     findAll () {
-      this.$axios.get('/api/user/findAll')
+      this.$axios.get('/api/user/list')
         .then(response => {
           alert(JSON.stringify(response.data))
         })
