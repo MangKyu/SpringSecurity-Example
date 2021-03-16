@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/user")
@@ -20,7 +22,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping(value = "signUp")
-    public ResponseEntity signUp(@RequestBody User user) {
+    public ResponseEntity<String> signUp(@RequestBody User user) {
         user.setRole(UserRole.ROLE_USER);
         user.setPw(passwordEncoder.encode(user.getPw()));
         return userService.findByEmail(user.getEmail()).isPresent()
@@ -29,7 +31,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/findAll")
-    public ResponseEntity findAll() {
+    public ResponseEntity<List<User>> findAll() {
         return ResponseEntity.ok(userService.findAll());
     }
 

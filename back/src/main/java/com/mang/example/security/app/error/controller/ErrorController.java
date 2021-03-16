@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ErrorController {
 
     @GetMapping(value = "/unauthorized")
-    public ResponseEntity unauthorized() {
+    public ResponseEntity<Void> unauthorized() {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
