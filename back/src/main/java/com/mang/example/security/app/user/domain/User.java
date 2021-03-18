@@ -10,6 +10,9 @@ import java.io.Serializable;
 @Entity
 @Table(name = "USER")
 @Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends Common implements Serializable {
 
     @Column(nullable = false, unique = true, length = 50)
