@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface UserService {
 
-    User signUp(SignUpDTO signUpDTO);
+    User signUp(final SignUpDTO signUpDTO);
 
     Optional<User> findByEmail(final String email);
 

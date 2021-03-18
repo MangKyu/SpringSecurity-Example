@@ -13,11 +13,11 @@ import java.io.IOException;
 public class JwtTokenInterceptor implements HandlerInterceptor {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
-        String header = request.getHeader(AuthConstants.AUTH_HEADER);
+    public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) throws IOException {
+        final String header = request.getHeader(AuthConstants.AUTH_HEADER);
 
         if (header != null) {
-            String token = TokenUtils.getTokenFromHeader(header);
+            final String token = TokenUtils.getTokenFromHeader(header);
             if (TokenUtils.isValidToken(token)) {
                 return true;
             }

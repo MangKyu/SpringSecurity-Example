@@ -15,10 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                        Authentication authentication) {
-        User user = ((MyUserDetails) authentication.getPrincipal()).getUser();
-        String token = TokenUtils.generateJwtToken(user);
+    public void onAuthenticationSuccess(final HttpServletRequest request, final HttpServletResponse response,
+                                        final Authentication authentication) {
+        final User user = ((MyUserDetails) authentication.getPrincipal()).getUser();
+        final String token = TokenUtils.generateJwtToken(user);
         response.addHeader(AuthConstants.AUTH_HEADER, AuthConstants.TOKEN_TYPE + " " + token);
     }
 

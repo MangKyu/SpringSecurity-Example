@@ -17,15 +17,15 @@ import java.io.IOException;
 @Log4j2
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {
+    public CustomAuthenticationFilter(final AuthenticationManager authenticationManager) {
         super.setAuthenticationManager(authenticationManager);
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException{
-        UsernamePasswordAuthenticationToken authRequest;
+    public Authentication attemptAuthentication(final HttpServletRequest request, final HttpServletResponse response) throws AuthenticationException{
+        final UsernamePasswordAuthenticationToken authRequest;
         try{
-            User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
+            final User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
             authRequest = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPw());
         } catch (IOException exception){
             throw new InputNotFoundException();

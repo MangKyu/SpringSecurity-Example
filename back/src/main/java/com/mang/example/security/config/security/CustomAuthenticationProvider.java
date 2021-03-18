@@ -17,19 +17,19 @@ import javax.annotation.Resource;
 @Log4j2
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
-    @Resource(name="userDetailsService")
+    @Resource(name="userDetailsServiceImpl")
     private UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
         log.error("##############");
-        UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) authentication;
+        final UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) authentication;
         // AuthenticaionFilter에서 생성된 토큰으로부터 아이디와 비밀번호를 조회함
-        String userEmail = token.getName();
-        String userPw = (String) token.getCredentials();
+        final String userEmail = token.getName();
+        final String userPw = (String) token.getCredentials();
         // UserDetailsService를 통해 DB에서 아이디로 사용자 조회
-        MyUserDetails userDetails = (MyUserDetails) userDetailsService.loadUserByUsername(userEmail);
+        final MyUserDetails userDetails = (MyUserDetails) userDetailsService.loadUserByUsername(userEmail);
         if (!passwordEncoder.matches(userPw, userDetails.getPassword())) {
             throw new BadCredentialsException(userDetails.getUsername() + "Invalid password");
         }

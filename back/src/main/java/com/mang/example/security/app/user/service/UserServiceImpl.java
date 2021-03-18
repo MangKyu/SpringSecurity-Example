@@ -19,8 +19,8 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    public User signUp(SignUpDTO signUpDTO) {
-        User user = User.builder()
+    public User signUp(final SignUpDTO signUpDTO) {
+        final User user = User.builder()
                 .email(signUpDTO.getEmail())
                 .pw(passwordEncoder.encode(signUpDTO.getPw()))
                 .role(UserRole.ROLE_USER)

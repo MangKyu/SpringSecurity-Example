@@ -18,7 +18,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping(value = "/signUp")
-    public ResponseEntity<String> signUp(@RequestBody SignUpDTO signUpDTO) {
+    public ResponseEntity<String> signUp(@RequestBody final SignUpDTO signUpDTO) {
         return userService.findByEmail(signUpDTO.getEmail()).isPresent()
                 ? ResponseEntity.badRequest().build()
                 : ResponseEntity.ok(TokenUtils.generateJwtToken(userService.signUp(signUpDTO)));
@@ -26,7 +26,7 @@ public class UserController {
 
     @GetMapping(value = "/list")
     public ResponseEntity<UserListResponseDTO> findAll() {
-        UserListResponseDTO userListResponseDTO = UserListResponseDTO.builder()
+        final UserListResponseDTO userListResponseDTO = UserListResponseDTO.builder()
                 .userList(userService.findAll()).build();
 
         return ResponseEntity.ok(userListResponseDTO);
