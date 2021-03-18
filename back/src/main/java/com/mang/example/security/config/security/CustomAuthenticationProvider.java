@@ -11,6 +11,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.annotation.Resource;
+
 @RequiredArgsConstructor
 @Log4j2
 public class CustomAuthenticationProvider implements AuthenticationProvider {
