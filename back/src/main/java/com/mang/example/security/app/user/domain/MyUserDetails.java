@@ -1,20 +1,20 @@
 package com.mang.example.security.app.user.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
 public class MyUserDetails implements UserDetails {
 
     @Delegate
-    private User user;
-    private Collection<? extends GrantedAuthority> authorities;
+    private final User user;
+    private final Collection<? extends GrantedAuthority> authorities;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

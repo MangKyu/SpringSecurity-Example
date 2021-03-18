@@ -2,7 +2,6 @@ package com.mang.example.security.app.user.service;
 
 import com.mang.example.security.app.user.domain.User;
 import com.mang.example.security.app.user.repository.UserRepository;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +12,7 @@ import java.util.Optional;
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
-    @NonNull
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
     public User signUp(User user) {
@@ -22,7 +20,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
+    public Optional<User> findByEmail(final String email) {
         return userRepository.findByEmail(email);
     }
 
@@ -30,4 +28,5 @@ public class UserServiceImpl implements UserService {
     public List<User> findAll() {
         return userRepository.findAll();
     }
+
 }
