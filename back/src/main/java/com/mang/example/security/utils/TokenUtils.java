@@ -5,7 +5,6 @@ import com.mang.example.security.enums.role.UserRole;
 import io.jsonwebtoken.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 import javax.crypto.spec.SecretKeySpec;

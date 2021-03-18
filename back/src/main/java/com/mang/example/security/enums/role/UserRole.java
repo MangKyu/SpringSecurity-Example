@@ -1,6 +1,5 @@
 package com.mang.example.security.enums.role;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
