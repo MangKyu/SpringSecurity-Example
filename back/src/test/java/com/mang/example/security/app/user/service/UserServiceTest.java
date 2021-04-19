@@ -9,18 +9,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
@@ -31,7 +29,7 @@ class UserServiceTest {
     @Mock
     private UserRepository userRepository;
 
-    @Mock
+    @Spy
     private BCryptPasswordEncoder passwordEncoder;
 
     @DisplayName("회원 가입")
@@ -41,7 +39,6 @@ class UserServiceTest {
         final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         final SignUpDTO signUpDTO = signUpDTO();
         final String encryptedPw = encoder.encode(signUpDTO.getPw());
-        doReturn(encryptedPw).when(passwordEncoder).encode(signUpDTO.getPw());
 
         // when
         doReturn(new User(signUpDTO.getEmail(), encryptedPw, UserRole.ROLE_USER)).when(userRepository).save(any(User.class));
@@ -50,6 +47,10 @@ class UserServiceTest {
         // then
         assertThat(user.getEmail()).isEqualTo(signUpDTO.getEmail());
         assertThat(encoder.matches(signUpDTO.getPw(), user.getPw())).isTrue();
+
+        // verify
+        verify(userRepository, times(1)).save(any(User.class));
+        verify(passwordEncoder, times(1)).encode(any(String.class));
     }
 
     @DisplayName("이메일 중복 여부")
@@ -70,13 +71,13 @@ class UserServiceTest {
     @Test
     void findAll() {
         // given
-        doReturn(Collections.emptyList()).when(userRepository).findAll();
+        doReturn(userList()).when(userRepository).findAll();
 
         // when
         final List<User> userList = userService.findAll();
 
         // then
-        assertThat(userList.size()).isEqualTo(0);
+        assertThat(userList.size()).isEqualTo(5);
     }
 
     private SignUpDTO signUpDTO() {
@@ -84,6 +85,14 @@ class UserServiceTest {
         signUpDTO.setEmail("test@test.test");
         signUpDTO.setPw("test");
         return signUpDTO;
+    }
+
+    private List<User> userList() {
+        final List<User> userList = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            userList.add(new User("test@test.test", "test", UserRole.ROLE_USER));
+        }
+        return userList;
     }
 
 }
