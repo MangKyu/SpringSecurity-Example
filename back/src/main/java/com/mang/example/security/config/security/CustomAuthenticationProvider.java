@@ -11,19 +11,15 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.annotation.Resource;
-
 @RequiredArgsConstructor
 @Log4j2
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
-    @Resource(name="userDetailsServiceImpl")
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
-        log.error("##############");
         final UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) authentication;
         // AuthenticaionFilter에서 생성된 토큰으로부터 아이디와 비밀번호를 조회함
         final String userEmail = token.getName();
