@@ -1,7 +1,6 @@
 package com.mang.example.security.config.security;
 
 import com.mang.example.security.app.user.model.UserDetailsVO;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -12,20 +11,15 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.annotation.Resource;
-
 @RequiredArgsConstructor
 @Log4j2
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
-    @Resource(name = "userDetailsService")
-    private UserDetailsService userDetailsService;
-    @NonNull
-    private BCryptPasswordEncoder passwordEncoder;
+    private final UserDetailsService userDetailsService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        log.error("##############");
         UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) authentication;
         // AuthenticaionFilter에서 생성된 토큰으로부터 아이디와 비밀번호를 조회함
         String userEmail = token.getName();

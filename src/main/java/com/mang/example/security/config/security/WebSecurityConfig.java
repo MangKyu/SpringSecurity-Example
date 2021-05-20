@@ -1,6 +1,7 @@
 package com.mang.example.security.config.security;
 
 import com.mang.example.security.handler.CustomLoginSuccessHandler;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,12 +10,16 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final UserDetailsService userDetailsService;
 
     // 정적 자원에 대해서는 Security 설정을 적용하지 않음.
     @Override
@@ -66,7 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public CustomAuthenticationProvider customAuthenticationProvider() {
-        return new CustomAuthenticationProvider(bCryptPasswordEncoder());
+        return new CustomAuthenticationProvider(userDetailsService, bCryptPasswordEncoder());
     }
 
     @Override

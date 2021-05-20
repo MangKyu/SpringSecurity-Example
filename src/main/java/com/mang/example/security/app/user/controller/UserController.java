@@ -10,12 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 @RequiredArgsConstructor
 @Controller
@@ -23,8 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 @Log4j2
 public class UserController {
 
-    @Resource(name = "userService")
-    private UserService userService;
+    private final UserService userService;
 
     @NonNull
     private BCryptPasswordEncoder passwordEncoder;

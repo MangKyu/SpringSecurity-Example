@@ -2,16 +2,14 @@ package com.mang.example.security.app.user.service;
 
 import com.mang.example.security.app.user.model.UserVO;
 import com.mang.example.security.app.user.repository.UserRepository;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
-@Service("userService")
+@Service
 public class UserServiceImpl implements UserService {
 
-    @NonNull
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
     public UserVO login(UserVO userVO) {
